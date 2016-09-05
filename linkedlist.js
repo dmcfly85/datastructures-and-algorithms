@@ -1,3 +1,6 @@
+const util = require('util')
+
+
 var Node = function (data) {
   this.data = data;
   this.next = null;
@@ -33,14 +36,45 @@ linkedList.prototype.search = function (value) {
   var currentNode = this.head;
   var go = true;
   while (go) {
-    if (currentNode.data == value) return currentNode.data;
+    if (currentNode.data == value) return currentNode;
     if (currentNode.next === null) go = false;
     currentNode = currentNode.next;
   }
   return 'error not found';
 };
 
+linkedList.prototype.remove = function (value) {
+  var currentNode = this.head;
+  var doomedNodesParent = null;
 
+  //removing if node to remove is head
+  if (currentNode.data == value) {
+    this.head = currentNode.next
+    return this
+  }
+
+  doomedNodesParent = currentNode
+  currentNode = currentNode.next
+  var go = true
+
+  while (go) {
+    if (currentNode.data == value) {
+      doomedNodesParent.next = currentNode.next
+      return this
+    } else {
+      console.log("CN",currentNode);
+      doomedNodesParent = currentNode
+      currentNode = currentNode.next
+      console.log("CN",(currentNode.next == null));
+      if (currentNode.next == null) go = false;
+    }
+
+  }
+  return "not found"
+};
+
+
+//a = { data: 'A', next: { data: 'B', next: { data: 'C', next: { data: 'D', next: null } } }
 
 var list = new linkedList();
 list.append('A');
@@ -48,4 +82,9 @@ list.append('B');
 list.append('C');
 list.append('D');
 
-console.log('search', list.search('D'));
+//console.log(list);
+
+//return console.log('search', list.search('B'));
+console.log('remove', list.remove("D"));
+//console.log("list",list);
+console.log(util.inspect(list, false, null))
