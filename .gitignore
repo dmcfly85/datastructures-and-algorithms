@@ -1,0 +1,6 @@
+.tern-project
+.vscode
+.vscodez
+
+*.swp
+*.swo
